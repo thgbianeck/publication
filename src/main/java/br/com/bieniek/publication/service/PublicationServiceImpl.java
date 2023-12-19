@@ -1,5 +1,6 @@
 package br.com.bieniek.publication.service;
 
+import br.com.bieniek.publication.controller.response.PublicationResponse;
 import br.com.bieniek.publication.domain.Publication;
 import br.com.bieniek.publication.mapper.PublicationMapper;
 import br.com.bieniek.publication.repository.PublicationRepository;
@@ -22,17 +23,16 @@ public class PublicationServiceImpl implements PublicationService{
     }
 
     @Override
-    public List<Publication> findAll() {
+    public List<PublicationResponse> findAll() {
         var publications = publicationRepository.findAll();
         return publications.stream()
-                .map(publicationMapper::toPublication)
+                .map(publicationMapper::toPublicationResponse)
                 .toList();
     }
 
     @Override
-    public Publication findById(String id) {
-        return publicationRepository.findById(id)
-                .map(publicationMapper::toPublication)
+    public PublicationResponse findById(String id) {
+        return publicationRepository.findById(id).map(publicationMapper::toPublicationResponse)
                 .orElseThrow(() -> new RuntimeException("Publication not found"));
     }
 }

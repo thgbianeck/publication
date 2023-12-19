@@ -1,6 +1,7 @@
 package br.com.bieniek.publication.controller;
 
 import br.com.bieniek.publication.controller.request.PublicationRequest;
+import br.com.bieniek.publication.controller.response.PublicationResponse;
 import br.com.bieniek.publication.domain.Publication;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,9 @@ public interface PublicationController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    List<Publication> findAll();
+    List<PublicationResponse> findAll();
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    Publication findById(@PathVariable final String id);
+    PublicationResponse findById(@PathVariable final String id);
 }

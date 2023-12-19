@@ -1,6 +1,7 @@
 package br.com.bieniek.publication.controller;
 
 import br.com.bieniek.publication.controller.request.PublicationRequest;
+import br.com.bieniek.publication.controller.response.PublicationResponse;
 import br.com.bieniek.publication.domain.Publication;
 import br.com.bieniek.publication.mapper.PublicationMapper;
 import br.com.bieniek.publication.service.PublicationService;
@@ -23,12 +24,12 @@ public class PublicationControllerImpl implements PublicationController {
     }
 
     @Override
-    public List<Publication> findAll() {
+    public List<PublicationResponse> findAll() {
         return publicationService.findAll();
     }
 
     @Override
-    public Publication findById(String id) {
+    public PublicationResponse findById(String id) {
         return publicationService.findById(id);
     }
 }
