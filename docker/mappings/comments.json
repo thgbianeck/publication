@@ -1,0 +1,22 @@
+{
+  "request":{
+    "method":"GET",
+    "url":"/comments/publication/6581dc9a3ce99734ca711de0"
+  },
+  "response":{
+    "status":200,
+    "headers":{
+      "Content-Type":"application/json"
+    },
+    "jsonBody":[
+      {
+        "author":"João",
+        "text":"Muito bom o curso do DevDeOlho"
+      },
+      {
+        "author":"Thiago",
+        "text":"Muito abrangente o curso do DevDeOlho"
+      }
+    ]
+  }
+}

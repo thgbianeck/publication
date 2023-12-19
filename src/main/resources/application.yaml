@@ -6,3 +6,14 @@ spring:
       username: root
       password: example
       database: circuit-breaker
+
+client:
+  comments:
+    url: http://localhost:8088
+
+resilience4j.circuitbreaker:
+    instances:
+      comments:
+        sliding-window-size: 8      # Quantidade de chamadas que serão avaliadas para o circuito
+        minimum-number-of-calls: 4  # Quantidade mínima de chamadas para o circuito ser avaliado
+

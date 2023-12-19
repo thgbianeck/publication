@@ -13,4 +13,5 @@ public interface PublicationMapper {
     Publication toPublication(PublicationEntity publicationEntity);
     Publication toPublication(PublicationRequest publicationRequest);
     PublicationResponse toPublicationResponse(PublicationEntity publicationEntity);
+    PublicationResponse toPublicationResponse(Publication publication);
 }
