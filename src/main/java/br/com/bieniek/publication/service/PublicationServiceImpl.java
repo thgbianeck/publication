@@ -3,14 +3,17 @@ package br.com.bieniek.publication.service;
 import br.com.bieniek.publication.client.CommentClient;
 import br.com.bieniek.publication.controller.response.PublicationResponse;
 import br.com.bieniek.publication.domain.Publication;
+import br.com.bieniek.publication.exception.FallBackException;
 import br.com.bieniek.publication.mapper.PublicationMapper;
 import br.com.bieniek.publication.repository.PublicationRepository;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PublicationServiceImpl implements PublicationService{
@@ -34,7 +37,7 @@ public class PublicationServiceImpl implements PublicationService{
     }
 
     @Override
-    @CircuitBreaker(name = "comments")
+    @CircuitBreaker(name = "comments", fallbackMethod = "findByIdFallback")
     public PublicationResponse findById(String id) {
         var publication = publicationRepository.findById(id)
                 .map(publicationMapper::toPublication)
@@ -44,5 +47,10 @@ public class PublicationServiceImpl implements PublicationService{
         publication.setComments(comments);
 
         return publicationMapper.toPublicationResponse(publication);
+    }
+
+    private PublicationResponse findByIdFallback(String id, Throwable cause) {
+        log.warn("[WARN] Fallback with id: {}", id);
+        throw new FallBackException(cause);
     }
 }
