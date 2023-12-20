@@ -20,7 +20,7 @@ public class PublicationServiceImpl implements PublicationService{
 
     private final PublicationRepository publicationRepository;
     private final PublicationMapper publicationMapper;
-    private final CommentClient commentClient;
+    private final CommentService commentService;
 
     @Override
     public void insert(final Publication publication) {
@@ -37,20 +37,15 @@ public class PublicationServiceImpl implements PublicationService{
     }
 
     @Override
-    @CircuitBreaker(name = "comments", fallbackMethod = "findByIdFallback")
     public PublicationResponse findById(String id) {
         var publication = publicationRepository.findById(id)
                 .map(publicationMapper::toPublication)
                 .orElseThrow(() -> new RuntimeException("Publication not found"));
 
-        var comments = commentClient.getCommentsByPublicationId(id);
+        var comments = commentService.getCommentsByPublicationId(id);
         publication.setComments(comments);
 
         return publicationMapper.toPublicationResponse(publication);
     }
 
-    private PublicationResponse findByIdFallback(String id, Throwable cause) {
-        log.warn("[WARN] Fallback with id: {}", id);
-        throw new FallBackException(cause);
-    }
 }

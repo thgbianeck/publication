@@ -17,7 +17,7 @@ resilience4j.circuitbreaker:
         sliding-window-size: 8      # Quantidade de chamadas que serão avaliadas para o circuito
         minimum-number-of-calls: 4  # Quantidade mínima de chamadas para o circuito ser avaliado
        # permitted-number-of-calls-in-half-open-state: 2 # Quantidade de chamadas permitidas no estado half-open
-       # wait-duration-in-open-state: 10000            # Tempo que o circuito ficará aberto
+        wait-duration-in-open-state: 10000            # Tempo que o circuito ficará aberto
        # slow-call-duration-threshold: 500            # Tempo de resposta que será considerado lento
        # slow-call-rate-threshold: 50                  # Porcentagem de chamadas lentas que serão consideradas
 
