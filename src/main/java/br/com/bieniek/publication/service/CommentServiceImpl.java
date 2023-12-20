@@ -16,14 +16,18 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentClient commentClient;
+    private final RedisService redisService;
 
     @Override
     @CircuitBreaker(name = "comments", fallbackMethod = "getCommentsByPublicationIdFallback")
     public List<Comment> getCommentsByPublicationId(String id) {
-        return commentClient.getCommentsByPublicationId(id);
+        var comments = commentClient.getCommentsByPublicationId(id);
+        redisService.save(comments, id);
+        return comments;
     }
 
     private List<Comment> getCommentsByPublicationIdFallback(String id, Throwable cause) {
-        return List.of();
+        log.warn("[WARN] fallback with id {}", id);
+        return redisService.findById(id);
     }
 }
